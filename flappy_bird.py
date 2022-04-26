@@ -4,6 +4,8 @@ import neat
 import os
 import random
 
+pygame.font.init()
+
 WINDOW_WIDTH = 575
 WINDOW_HEIGHT = 775
 
@@ -18,6 +20,8 @@ BASE_IMG = pygame.transform.scale2x(
     pygame.image.load(os.path.join("imgs", "base.png")))
 BACKGROUND_IMG = pygame.transform.scale2x(
     pygame.image.load(os.path.join("imgs", "bg.png")))
+
+STAT_FONT = pygame.font.SysFont('comicsans', 50)
 
 
 class Bird:
@@ -100,6 +104,9 @@ def draw_window(win, bird, pipes, base, score):
 
     for pipe in pipes:
         pipe.draw(win)
+
+    text = STAT_FONT.render("Score:" + str(score), 1, (255, 255, 255))
+    win.blit(text, (WINDOW_WIDTH-10-text.get_width(), 10))
 
     base.draw(win)
 
@@ -221,9 +228,17 @@ def main():
             pass
 
         base.move()
-        draw_window(win, bird, pipes, base)
+        draw_window(win, bird, pipes, base, score)
     pygame.quit()
     quit()
 
 
 main()
+
+def run():
+    pass
+
+if __name__=="__main__":
+    local_dir=os.path.dirname(__file__)
+    config_path=os.path.join(local_dir, "neat-config.txt")
+    run(config_path)
